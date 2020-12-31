@@ -2,7 +2,11 @@
     "name": "node-red-dsm",
     "description": "A Node-RED Project",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-browser-utils": "0.0.9",
+        "node-red-contrib-huemagic": "3.0.0",
+        "node-red-contrib-tensorflow": "0.2.2"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
