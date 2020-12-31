@@ -2,9 +2,18 @@
     {
         "id": "9a441656.7bff58",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "handpose light color",
         "disabled": false,
         "info": ""
+    },
+    {
+        "id": "4398482b.582678",
+        "type": "hue-bridge",
+        "name": "Philips hue",
+        "bridge": "192.168.1.83",
+        "key": "J2EpAXWNTmAC9MQoStq9lU62d5ZIhGG2U80mEnz8",
+        "interval": "3000",
+        "disableupdates": false
     },
     {
         "id": "c0a47590.5b16b8",
@@ -57,8 +66,122 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 400,
-        "y": 160,
+        "x": 570,
+        "y": 180,
         "wires": []
+    },
+    {
+        "id": "b6ca80a6.28e42",
+        "type": "handpose",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "x": 340,
+        "y": 280,
+        "wires": [
+            [
+                "f2307ecd.6d605"
+            ]
+        ]
+    },
+    {
+        "id": "28dc872f.6786a8",
+        "type": "camera",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "b6ca80a6.28e42",
+                "f2307ecd.6d605"
+            ]
+        ]
+    },
+    {
+        "id": "2a79e8ca.66ebf8",
+        "type": "fileinject",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "x": 150,
+        "y": 340,
+        "wires": [
+            [
+                "b6ca80a6.28e42"
+            ]
+        ]
+    },
+    {
+        "id": "e8a3dcf4.593ab",
+        "type": "hue-light",
+        "z": "9a441656.7bff58",
+        "name": "Hue color lamp 2",
+        "bridge": "4398482b.582678",
+        "lightid": "2",
+        "colornamer": true,
+        "skipevents": false,
+        "universalevents": false,
+        "x": 410,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e8d715.ce7fe9",
+        "type": "inject",
+        "z": "9a441656.7bff58",
+        "name": "switch light off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 170,
+        "y": 440,
+        "wires": [
+            [
+                "e8a3dcf4.593ab"
+            ]
+        ]
+    },
+    {
+        "id": "e6bb2382.4a4f2",
+        "type": "inject",
+        "z": "9a441656.7bff58",
+        "name": "switch light on",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 170,
+        "y": 500,
+        "wires": [
+            [
+                "e8a3dcf4.593ab"
+            ]
+        ]
     }
 ]
