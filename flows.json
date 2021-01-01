@@ -377,8 +377,8 @@
         "id": "f2beb54e.2a5598",
         "type": "posenet",
         "z": "f9942b0d.2c1b58",
-        "name": "",
-        "x": 280,
+        "name": "human pose AI",
+        "x": 300,
         "y": 240,
         "wires": [
             [
