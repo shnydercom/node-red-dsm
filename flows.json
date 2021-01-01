@@ -1,5 +1,12 @@
 [
     {
+        "id": "f9942b0d.2c1b58",
+        "type": "tab",
+        "label": "bodypose light color",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "9a441656.7bff58",
         "type": "tab",
         "label": "handpose light color",
@@ -24,107 +31,6 @@
         "x": 200,
         "y": 100,
         "wires": []
-    },
-    {
-        "id": "296fb8be.bd57a8",
-        "type": "inject",
-        "z": "9a441656.7bff58",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 160,
-        "wires": [
-            [
-                "f2307ecd.6d605"
-            ]
-        ]
-    },
-    {
-        "id": "f2307ecd.6d605",
-        "type": "debug",
-        "z": "9a441656.7bff58",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 570,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "b6ca80a6.28e42",
-        "type": "handpose",
-        "z": "9a441656.7bff58",
-        "name": "",
-        "x": 340,
-        "y": 280,
-        "wires": [
-            [
-                "f2307ecd.6d605"
-            ]
-        ]
-    },
-    {
-        "id": "28dc872f.6786a8",
-        "type": "camera",
-        "z": "9a441656.7bff58",
-        "name": "",
-        "x": 110,
-        "y": 260,
-        "wires": [
-            [
-                "b6ca80a6.28e42",
-                "f2307ecd.6d605"
-            ]
-        ]
-    },
-    {
-        "id": "2a79e8ca.66ebf8",
-        "type": "fileinject",
-        "z": "9a441656.7bff58",
-        "name": "",
-        "x": 150,
-        "y": 340,
-        "wires": [
-            [
-                "b6ca80a6.28e42"
-            ]
-        ]
-    },
-    {
-        "id": "e8a3dcf4.593ab",
-        "type": "hue-light",
-        "z": "9a441656.7bff58",
-        "name": "Hue color lamp 2",
-        "bridge": "4398482b.582678",
-        "lightid": "2",
-        "colornamer": true,
-        "skipevents": false,
-        "universalevents": false,
-        "x": 410,
-        "y": 460,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "5e8d715.ce7fe9",
@@ -181,6 +87,304 @@
         "wires": [
             [
                 "e8a3dcf4.593ab"
+            ]
+        ]
+    },
+    {
+        "id": "2a79e8ca.66ebf8",
+        "type": "fileinject",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "x": 150,
+        "y": 340,
+        "wires": [
+            [
+                "b6ca80a6.28e42"
+            ]
+        ]
+    },
+    {
+        "id": "28dc872f.6786a8",
+        "type": "camera",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "b6ca80a6.28e42"
+            ]
+        ]
+    },
+    {
+        "id": "e8a3dcf4.593ab",
+        "type": "hue-light",
+        "z": "9a441656.7bff58",
+        "name": "Hue color lamp 2",
+        "bridge": "4398482b.582678",
+        "lightid": "2",
+        "colornamer": true,
+        "skipevents": false,
+        "universalevents": false,
+        "x": 530,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6ca80a6.28e42",
+        "type": "handpose",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "x": 340,
+        "y": 280,
+        "wires": [
+            [
+                "3b38ba05.e35246",
+                "c2171a7f.8775d8",
+                "9cb89038.3f071"
+            ]
+        ]
+    },
+    {
+        "id": "3b38ba05.e35246",
+        "type": "function",
+        "z": "9a441656.7bff58",
+        "name": "read hand",
+        "func": "if(!msg.payload) return msg;\n\nlet pb = msg.payload.palmBase;\nlet t = msg.payload.thumb;\n\nlet ylen = pb.y - t.y;\nlet xlen = pb.x - t.x;\n\nlet lennormal = Math.sqrt(ylen*ylen + xlen*xlen);\n\nlet ynormal = ylen / lennormal;\nlet xnormal = xlen / lennormal;\n\nmsg.payload = { ynormal , xnormal };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\ndotproduct = (a, b) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);",
+        "finalize": "",
+        "x": 480,
+        "y": 380,
+        "wires": [
+            [
+                "c2171a7f.8775d8",
+                "e1667757.5e2648"
+            ]
+        ]
+    },
+    {
+        "id": "c2171a7f.8775d8",
+        "type": "debug",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "9cb89038.3f071",
+        "type": "image",
+        "z": "9a441656.7bff58",
+        "name": "",
+        "width": 160,
+        "data": "annotatedInput",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 560,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e1667757.5e2648",
+        "type": "function",
+        "z": "9a441656.7bff58",
+        "name": "adjust light",
+        "func": "if(!msg.payload) return null;\nlet colorlight = {\n    on: true,\n    brightness: 30,\n    rgb: [ \n        Math.floor(128+128*msg.payload.ynormal),\n        Math.floor(128+128*msg.payload.xnormal),\n        0\n    ]\n}\nmsg.payload = colorlight;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 480,
+        "wires": [
+            [
+                "e8a3dcf4.593ab"
+            ]
+        ]
+    },
+    {
+        "id": "5d6a8500.ac16bc",
+        "type": "inject",
+        "z": "f9942b0d.2c1b58",
+        "name": "switch light off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 150,
+        "y": 440,
+        "wires": [
+            [
+                "555a2073.9e5fa"
+            ]
+        ]
+    },
+    {
+        "id": "fd79f32f.e2c47",
+        "type": "inject",
+        "z": "f9942b0d.2c1b58",
+        "name": "switch light on",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 150,
+        "y": 500,
+        "wires": [
+            [
+                "555a2073.9e5fa"
+            ]
+        ]
+    },
+    {
+        "id": "1e810b23.967ba5",
+        "type": "camera",
+        "z": "f9942b0d.2c1b58",
+        "name": "",
+        "x": 90,
+        "y": 260,
+        "wires": [
+            [
+                "f2beb54e.2a5598"
+            ]
+        ]
+    },
+    {
+        "id": "555a2073.9e5fa",
+        "type": "hue-light",
+        "z": "f9942b0d.2c1b58",
+        "name": "Hue color lamp 2",
+        "bridge": "4398482b.582678",
+        "lightid": "2",
+        "colornamer": true,
+        "skipevents": false,
+        "universalevents": false,
+        "x": 510,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6f748477.fc08bc",
+        "type": "function",
+        "z": "f9942b0d.2c1b58",
+        "name": "read pose",
+        "func": "if(!msg.payload) return msg;\n\nlet LEye = msg.payload.leftEye;\nlet REye = msg.payload.rightEye;\n\nlet ylen = LEye.y - REye.y;\nlet xlen = LEye.x - REye.x;\n\nlet lennormal = Math.sqrt(ylen*ylen + xlen*xlen);\n\nlet ynormal = ylen / lennormal;\nlet xnormal = xlen / lennormal;\n\nmsg.payload = { ynormal , xnormal };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\ndotproduct = (a, b) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);",
+        "finalize": "",
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "acfbc4b8.46e518",
+                "a59c89f2.f26258"
+            ]
+        ]
+    },
+    {
+        "id": "acfbc4b8.46e518",
+        "type": "debug",
+        "z": "f9942b0d.2c1b58",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f02c9c67.574df",
+        "type": "image",
+        "z": "f9942b0d.2c1b58",
+        "name": "",
+        "width": "300",
+        "data": "annotatedInput",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 500,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "a59c89f2.f26258",
+        "type": "function",
+        "z": "f9942b0d.2c1b58",
+        "name": "adjust light",
+        "func": "if(!msg.payload) return null;\n\nlet ratio = Math.sqrt(msg.payload.xnormal*msg.payload.xnormal)/\n            Math.sqrt(msg.payload.ynormal*msg.payload.ynormal);\n\nlet colorlight = {\n    on: true,\n    brightness: 30,\n    rgb: [\n        255*1-ratio,\n        255*ratio,\n        0\n    ]\n}\nmsg.payload = colorlight;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 450,
+        "y": 480,
+        "wires": [
+            [
+                "555a2073.9e5fa",
+                "acfbc4b8.46e518"
+            ]
+        ]
+    },
+    {
+        "id": "f2beb54e.2a5598",
+        "type": "posenet",
+        "z": "f9942b0d.2c1b58",
+        "name": "",
+        "x": 280,
+        "y": 240,
+        "wires": [
+            [
+                "f02c9c67.574df",
+                "acfbc4b8.46e518",
+                "6f748477.fc08bc"
             ]
         ]
     }
