@@ -237,8 +237,8 @@
         "topic": "",
         "payload": "false",
         "payloadType": "bool",
-        "x": 150,
-        "y": 440,
+        "x": 110,
+        "y": 180,
         "wires": [
             [
                 "555a2073.9e5fa"
@@ -266,8 +266,8 @@
         "topic": "",
         "payload": "true",
         "payloadType": "bool",
-        "x": 150,
-        "y": 500,
+        "x": 110,
+        "y": 240,
         "wires": [
             [
                 "555a2073.9e5fa"
@@ -280,7 +280,7 @@
         "z": "f9942b0d.2c1b58",
         "name": "",
         "x": 90,
-        "y": 260,
+        "y": 300,
         "wires": [
             [
                 "f2beb54e.2a5598"
@@ -297,8 +297,8 @@
         "colornamer": true,
         "skipevents": false,
         "universalevents": false,
-        "x": 510,
-        "y": 580,
+        "x": 890,
+        "y": 220,
         "wires": [
             []
         ]
@@ -313,30 +313,13 @@
         "noerr": 0,
         "initialize": "// Code added here will be run once\n// whenever the node is deployed.\ndotproduct = (a, b) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);",
         "finalize": "",
-        "x": 380,
-        "y": 380,
+        "x": 480,
+        "y": 300,
         "wires": [
             [
-                "acfbc4b8.46e518",
                 "a59c89f2.f26258"
             ]
         ]
-    },
-    {
-        "id": "acfbc4b8.46e518",
-        "type": "debug",
-        "z": "f9942b0d.2c1b58",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 550,
-        "y": 300,
-        "wires": []
     },
     {
         "id": "f02c9c67.574df",
@@ -351,7 +334,7 @@
         "pass": false,
         "outputs": 0,
         "x": 500,
-        "y": 20,
+        "y": 360,
         "wires": []
     },
     {
@@ -364,12 +347,11 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 450,
-        "y": 480,
+        "x": 670,
+        "y": 300,
         "wires": [
             [
-                "555a2073.9e5fa",
-                "acfbc4b8.46e518"
+                "555a2073.9e5fa"
             ]
         ]
     },
@@ -378,12 +360,11 @@
         "type": "posenet",
         "z": "f9942b0d.2c1b58",
         "name": "human pose AI",
-        "x": 300,
-        "y": 240,
+        "x": 280,
+        "y": 300,
         "wires": [
             [
                 "f02c9c67.574df",
-                "acfbc4b8.46e518",
                 "6f748477.fc08bc"
             ]
         ]
