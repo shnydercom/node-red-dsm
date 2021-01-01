@@ -359,7 +359,7 @@
         "type": "function",
         "z": "f9942b0d.2c1b58",
         "name": "adjust light",
-        "func": "if(!msg.payload) return null;\n\nlet xratio = Math.sqrt(msg.payload.xnormal*msg.payload.xnormal);\nlet yratio = Math.sqrt(msg.payload.ynormal*msg.payload.ynormal);\n\nlet nratio = Math.sqrt(msg.payload.nnormal*msg.payload.nnormal);\n\nlet colorlight = {\n    on: true,\n    brightness: 30,\n    rgb: [\n        255*yratio,\n        255*xratio,\n        255*nratio\n    ]\n}\nmsg.payload = colorlight;\nreturn msg;",
+        "func": "if(!msg.payload) return null;\n\nlet xratio = Math.sqrt(msg.payload.xnormal*msg.payload.xnormal);\nlet yratio = Math.sqrt(msg.payload.ynormal*msg.payload.ynormal);\n\nlet nratio = Math.sqrt(msg.payload.nnormal*msg.payload.nnormal);\n\nlet colorlight = {\n    on: true,\n    brightness: 100,\n    rgb: [\n        255*yratio,\n        255*xratio,\n        255*nratio\n    ]\n}\nmsg.payload = colorlight;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
