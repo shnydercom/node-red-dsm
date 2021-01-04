@@ -238,7 +238,7 @@
         "payload": "false",
         "payloadType": "bool",
         "x": 110,
-        "y": 180,
+        "y": 40,
         "wires": [
             [
                 "555a2073.9e5fa"
@@ -267,7 +267,7 @@
         "payload": "true",
         "payloadType": "bool",
         "x": 110,
-        "y": 240,
+        "y": 100,
         "wires": [
             [
                 "555a2073.9e5fa"
@@ -280,7 +280,7 @@
         "z": "f9942b0d.2c1b58",
         "name": "",
         "x": 90,
-        "y": 300,
+        "y": 160,
         "wires": [
             [
                 "f2beb54e.2a5598"
@@ -297,8 +297,8 @@
         "colornamer": true,
         "skipevents": false,
         "universalevents": false,
-        "x": 890,
-        "y": 220,
+        "x": 830,
+        "y": 80,
         "wires": [
             []
         ]
@@ -308,13 +308,13 @@
         "type": "function",
         "z": "f9942b0d.2c1b58",
         "name": "read pose",
-        "func": "if(!msg.payload) return msg;\n\nlet left = msg.payload.leftShoulder;\nlet right = msg.payload.rightShoulder;\nlet nose = msg.payload.nose;\n\nlet ylen = left.y - right.y;\nlet xlen = left.x - right.x;\n\nlet nlen = nose.x - right.x;\n\nlet lennormal = Math.sqrt(ylen*ylen + xlen*xlen);\n\nlet ynormal = ylen / lennormal;\nlet xnormal = xlen / lennormal;\n\nlet nnormal = nlen / lennormal;\n\nmsg.payload = { ynormal , xnormal, nnormal };\nreturn msg;",
+        "func": "if(!msg.payload) return msg;\n\n// get an angle, values between -1 and 1\nlet lArmAngle = Math.atan2(\n    msg.payload.leftElbow.y - msg.payload.leftShoulder.y,\n    msg.payload.leftElbow.x - msg.payload.leftShoulder.x\n) / Math.PI;\n\nlet rArmAngle = Math.atan2(\n    msg.payload.rightShoulder.y - msg.payload.rightElbow.y,\n    msg.payload.rightShoulder.x - msg.payload.rightElbow.x\n    ) / Math.PI;\n\nlet rightlegnormal = Math.atan2(\n    msg.payload.rightHip.y - msg.payload.rightKnee.y,\n    msg.payload.rightHip.x - msg.payload.rightKnee.x\n    ) / Math.PI;\n    \nlet leftlegnormal = Math.atan2(\n    msg.payload.leftKnee.y - msg.payload.leftHip.y,\n    msg.payload.leftKnee.x - msg.payload.leftHip.x\n    ) / Math.PI;\n\n//choose the more \"extreme\" position for the leg    \nlet legAngle = rightlegnormal*rightlegnormal < leftlegnormal*leftlegnormal\n    ? rightlegnormal\n    : leftlegnormal;\n\nmsg.payload = { lArmAngle , rArmAngle, legAngle };\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "// Code added here will be run once\n// whenever the node is deployed.\ndotproduct = (a, b) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);",
         "finalize": "",
-        "x": 480,
-        "y": 300,
+        "x": 440,
+        "y": 160,
         "wires": [
             [
                 "a59c89f2.f26258"
@@ -326,15 +326,15 @@
         "type": "image",
         "z": "f9942b0d.2c1b58",
         "name": "",
-        "width": "300",
+        "width": "500",
         "data": "annotatedInput",
         "dataType": "msg",
         "thumbnail": false,
         "active": true,
         "pass": false,
         "outputs": 0,
-        "x": 500,
-        "y": 360,
+        "x": 460,
+        "y": 220,
         "wires": []
     },
     {
@@ -342,13 +342,13 @@
         "type": "function",
         "z": "f9942b0d.2c1b58",
         "name": "adjust light",
-        "func": "if(!msg.payload) return null;\n\nlet xratio = Math.sqrt(msg.payload.xnormal*msg.payload.xnormal);\nlet yratio = Math.sqrt(msg.payload.ynormal*msg.payload.ynormal);\n\nlet nratio = Math.sqrt(msg.payload.nnormal*msg.payload.nnormal);\n\nlet colorlight = {\n    on: true,\n    brightness: 100,\n    rgb: [\n        255*yratio,\n        255*xratio,\n        255*nratio\n    ]\n}\nmsg.payload = colorlight;\nreturn msg;",
+        "func": "if(!msg.payload) return null;\n\nlet rRatio = Math.abs(msg.payload.legAngle);\n\nlet gRatio = Math.abs(msg.payload.lArmAngle);\nlet bRatio = Math.abs(msg.payload.rArmAngle);\n\nlet colorlight = {\n    on: true,\n    brightness: 100,\n    rgb: [\n        255*rRatio,\n        255*gRatio,\n        255*bRatio\n    ]\n}\nmsg.payload = colorlight;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 670,
-        "y": 300,
+        "x": 610,
+        "y": 160,
         "wires": [
             [
                 "555a2073.9e5fa"
@@ -360,8 +360,8 @@
         "type": "posenet",
         "z": "f9942b0d.2c1b58",
         "name": "human pose AI",
-        "x": 280,
-        "y": 300,
+        "x": 260,
+        "y": 160,
         "wires": [
             [
                 "f02c9c67.574df",
