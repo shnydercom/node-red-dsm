@@ -17,8 +17,8 @@
         "id": "4398482b.582678",
         "type": "hue-bridge",
         "name": "Philips hue",
-        "bridge": "192.168.1.83",
-        "key": "J2EpAXWNTmAC9MQoStq9lU62d5ZIhGG2U80mEnz8",
+        "bridge": "",
+        "key": "",
         "interval": "3000",
         "disableupdates": false
     },
@@ -364,8 +364,8 @@
         "y": 160,
         "wires": [
             [
-                "f02c9c67.574df",
-                "6f748477.fc08bc"
+                "6f748477.fc08bc",
+                "f02c9c67.574df"
             ]
         ]
     }
